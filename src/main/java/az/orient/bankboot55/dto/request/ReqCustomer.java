@@ -1,4 +1,4 @@
-package az.orient.bankboot55.dto.response;
+package az.orient.bankboot55.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -6,10 +6,9 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class RespCustomer {
-    //response olarag customerin hansi informasiyalari qayidacaqsa burada yaradilacaq
+public class ReqCustomer {
 
-    @JsonProperty(value = "customerId") //variable olaraq id ile işleyib,front'a qayidan json'da customerİd gorunecek
+    @JsonProperty(value = "customerId")
     private Long id;
     private String username;
     private String password;
@@ -17,8 +16,10 @@ public class RespCustomer {
     private String surname;
     private String email;
     private String phone;
-    private String dob;
+    private Date dob;
     private String cif;
     private String pin;
     private String seria;
+
+
 }

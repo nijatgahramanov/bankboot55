@@ -13,4 +13,5 @@ public enum EnumAvailableStatus {
         return value;
     }
 
+
 }
