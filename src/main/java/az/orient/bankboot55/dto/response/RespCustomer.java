@@ -1,11 +1,17 @@
 package az.orient.bankboot55.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class RespCustomer {
     //response olarag customerin hansi informasiyalari qayidacaqsa burada yaradilacaq
 

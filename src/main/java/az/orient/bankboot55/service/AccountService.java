@@ -1,5 +1,6 @@
 package az.orient.bankboot55.service;
 
+import az.orient.bankboot55.dto.request.ReqAccount;
 import az.orient.bankboot55.dto.response.RespAccount;
 import az.orient.bankboot55.dto.response.Response;
 
@@ -11,4 +12,6 @@ public interface AccountService {
     Response<List<RespAccount>> getAccountListByCustomerId(Long customerId);
 
     Response<RespAccount> getAccountById(Long accountId);
+
+    Response addAccount(ReqAccount reqAccount);
 }

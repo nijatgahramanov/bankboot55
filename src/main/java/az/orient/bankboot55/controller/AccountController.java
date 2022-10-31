@@ -1,13 +1,12 @@
 package az.orient.bankboot55.controller;
 
+import az.orient.bankboot55.dto.request.ReqAccount;
+import az.orient.bankboot55.dto.request.ReqCustomer;
 import az.orient.bankboot55.dto.response.RespAccount;
 import az.orient.bankboot55.dto.response.Response;
 import az.orient.bankboot55.service.AccountService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,5 +30,11 @@ public class AccountController {
     public Response<RespAccount> getAccountById(@PathVariable("accountId") Long accountId) {
         return accountService.getAccountById(accountId);
     }
+
+    @PostMapping("/AddAccount")
+    public Response addAccount(@RequestBody ReqAccount reqAccount) {
+        return accountService.addAccount(reqAccount);
+    }
+
 
 }

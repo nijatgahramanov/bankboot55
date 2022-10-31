@@ -9,14 +9,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RespAccount {
-
-    private Long accountId;
-    private String name;
-    private String accountNo;
-    private String iban;
+public class RespTransaction {
+    private Long transactionId;
+    private RespAccount dtAccount;
+    private String crAccount;
+    private Double amount;
     private String currency;
-    private RespCustomer respCustomer;
-    private RespStatus status;
 
 }
