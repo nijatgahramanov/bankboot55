@@ -16,12 +16,16 @@ import az.orient.bankboot55.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
+
+    DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
     private final AccountRepository accountRepository;
 
@@ -128,12 +132,12 @@ public class AccountServiceImpl implements AccountService {
             Long customerId = reqAccount.getCustomerId();
 
             if (accountName == null || customerId == null) {
-               throw new BankException(ExceptionConstant.INVALID_REQUEST_DATA,"Invalid request data!");
+                throw new BankException(ExceptionConstant.INVALID_REQUEST_DATA, "Invalid request data!");
             }
 
-            Customer customer = customerRepository.findByIdAndActive(customerId,EnumAvailableStatus.ACTIVE.getValue());
-            if(customer==null){
-              throw new BankException(ExceptionConstant.CUSTOMER_NOT_FOUND,"Customer not found");
+            Customer customer = customerRepository.findByIdAndActive(customerId, EnumAvailableStatus.ACTIVE.getValue());
+            if (customer == null) {
+                throw new BankException(ExceptionConstant.CUSTOMER_NOT_FOUND, "Customer not found");
             }
 
             Account account = new Account();
@@ -159,24 +163,35 @@ public class AccountServiceImpl implements AccountService {
     }
 
     private RespAccount convert(Account account) {
-        RespAccount respAccount = new RespAccount();
-        respAccount.setName(account.getName());
-        respAccount.setAccountId(account.getId());
-        respAccount.setAccountNo(account.getAccountNo());
-        respAccount.setIban(account.getIban());
-        respAccount.setCurrency(account.getCurrency());
+        RespAccount respAccount = RespAccount.builder()
+                .accountId(account.getId())
+                .name(account.getName())
+                .accountNo(account.getAccountNo())
+                .iban(account.getIban())
+                .currency(account.getCurrency())
+                .build();
+
+        Customer customer = account.getCustomer();
 
         if (account.getCustomer() == null) {
             respAccount.setStatus(new RespStatus(ExceptionConstant.CUSTOMER_NOT_FOUND_FOR_THIS_ACCOUNT, "Customer not found for this account"));
             return respAccount;
         }
-        RespCustomer respCustomer = new RespCustomer();
-        respCustomer.setId(account.getCustomer().getId());
-        respCustomer.setName(account.getCustomer().getName());
-        respCustomer.setSurname(account.getCustomer().getSurname());
-        respCustomer.setCif(account.getCustomer().getCif());
-        respAccount.setRespCustomer(respCustomer);
 
+        RespCustomer respCustomer = RespCustomer.builder()
+                .id(customer.getId())
+                .name(customer.getName())
+                .surname(customer.getSurname())
+                .username(customer.getUsername())
+                .seria(customer.getSeria())
+                .cif(customer.getCif())
+                .pin(customer.getPin())
+                .dob(df.format(customer.getDob()))
+                .phone(customer.getPhone())
+                .email(customer.getEmail())
+                .build();
+
+        respAccount.setRespCustomer(respCustomer);
         return respAccount;
     }
 

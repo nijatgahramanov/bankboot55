@@ -1,17 +1,9 @@
-server:
-  port: 8083
-  servlet:
-    context-path: /bank
-
 spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/bankboot
-    username: root
-    password: nicat12345
+  profiles:
+    include:
+      -db
+      -server
+      -mail
 
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
+
 
