@@ -1,7 +1,6 @@
 package az.orient.bankboot55.dto.request;
 
-import az.orient.bankboot55.dto.response.RespAccount;
-import az.orient.bankboot55.entity.Account;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
