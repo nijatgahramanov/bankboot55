@@ -1,15 +1,18 @@
 package az.orient.bankboot55.service.impl;
 
+import az.orient.bankboot55.dto.request.ReqToken;
 import az.orient.bankboot55.dto.request.ReqUser;
 import az.orient.bankboot55.dto.response.RespStatus;
 import az.orient.bankboot55.dto.response.RespToken;
 import az.orient.bankboot55.dto.response.RespUser;
+import az.orient.bankboot55.dto.response.Response;
 import az.orient.bankboot55.entity.User;
 import az.orient.bankboot55.enums.EnumAvailableStatus;
 import az.orient.bankboot55.exception.BankException;
 import az.orient.bankboot55.exception.ExceptionConstant;
 import az.orient.bankboot55.repository.UserRepository;
 import az.orient.bankboot55.service.UserService;
+import az.orient.bankboot55.util.Utility;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +23,7 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final Utility utility;
 
     @Override
     public RespUser login(ReqUser reqUser) {
@@ -52,6 +56,7 @@ public class UserServiceImpl implements UserService {
             respToken.setToken(user.getToken());
 
             response.setRespToken(respToken);
+            response.setStatus(RespStatus.getSuccessMessage());
 
         } catch (BankException ex) {
             response.setStatus(new RespStatus(ex.getCode(), ex.getMessage()));
@@ -62,5 +67,26 @@ public class UserServiceImpl implements UserService {
         }
 
         return response;
+    }
+
+    @Override
+    public Response logout(ReqToken reqToken) {
+        Response response = new Response();
+        try {
+            User user = utility.checkToken(reqToken);
+            user.setToken(null);
+            userRepository.save(user);
+            response.setStatus(RespStatus.getSuccessMessage());
+
+
+        } catch (BankException ex) {
+            response.setStatus(new RespStatus(ex.getCode(), ex.getMessage()));
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            response.setStatus(new RespStatus(ExceptionConstant.INTERNAL_EXCEPTION, "Internal exception"));
+            ex.printStackTrace();
+        }
+
+        return null;
     }
 }

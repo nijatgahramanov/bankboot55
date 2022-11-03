@@ -1,6 +1,7 @@
 package az.orient.bankboot55.service.impl;
 
 import az.orient.bankboot55.dto.request.ReqCustomer;
+import az.orient.bankboot55.dto.request.ReqToken;
 import az.orient.bankboot55.dto.response.RespCustomer;
 import az.orient.bankboot55.dto.response.RespStatus;
 import az.orient.bankboot55.dto.response.Response;
@@ -10,6 +11,7 @@ import az.orient.bankboot55.exception.BankException;
 import az.orient.bankboot55.exception.ExceptionConstant;
 import az.orient.bankboot55.repository.CustomerRepository;
 import az.orient.bankboot55.service.CustomerService;
+import az.orient.bankboot55.util.Utility;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,13 +26,15 @@ public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
     DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+    private final Utility utility;
 
     @Override
-    public Response<List<RespCustomer>> getCustomerList() {
+    public Response<List<RespCustomer>> getCustomerList(ReqToken reqToken) {
         Response<List<RespCustomer>> response = new Response<>();
         List<RespCustomer> respCustomerList = new ArrayList<>();
 
         try {
+            utility.checkToken(reqToken); //token controlleri edilecek
             List<Customer> customerList = customerRepository.findAllByActive(EnumAvailableStatus.ACTIVE.getValue());
 
             if (customerList.isEmpty()) {
@@ -82,6 +86,7 @@ public class CustomerServiceImpl implements CustomerService {
         Response response = new Response();
 
         try {
+            utility.checkToken(reqCustomer.getToken());
             String name = reqCustomer.getName();
             String surname = reqCustomer.getSurname();
             if (name == null || surname == null) {
@@ -188,7 +193,7 @@ public class CustomerServiceImpl implements CustomerService {
         respCustomer.setUsername(customer.getUsername());
         respCustomer.setName(customer.getName());
         respCustomer.setSurname(customer.getSurname());
-        if(customer.getDob()!=null)
+        if (customer.getDob() != null)
             respCustomer.setDob(df.format(customer.getDob()));
         respCustomer.setCif(customer.getCif());
         respCustomer.setSeria(customer.getSeria());

@@ -20,6 +20,7 @@ public class ReqCustomer {
     private String cif;
     private String pin;
     private String seria;
+    private ReqToken token;
 
 
 }

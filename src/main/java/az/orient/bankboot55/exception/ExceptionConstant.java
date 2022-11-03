@@ -9,4 +9,5 @@ public final class ExceptionConstant {
     public static final Integer TRANSACTION_NOT_FOUND = 105;
     public static final Integer INVALID_USER = 106;
     public static final Integer USER_ALREADY_EXIST_IN_SESSION = 107;
+    public static final Integer INVALID_TOKEN = 108;
 }

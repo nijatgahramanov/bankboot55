@@ -5,6 +5,7 @@ spring:
     username: root
     password: nicat12345
 
+
   jpa:
     hibernate:
       ddl-auto: update

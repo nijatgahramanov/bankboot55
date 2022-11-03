@@ -2,6 +2,7 @@ package az.orient.bankboot55.controller;
 
 
 import az.orient.bankboot55.dto.request.ReqCustomer;
+import az.orient.bankboot55.dto.request.ReqToken;
 import az.orient.bankboot55.dto.response.RespCustomer;
 import az.orient.bankboot55.dto.response.Response;
 import az.orient.bankboot55.service.CustomerService;
@@ -19,9 +20,9 @@ public class CustomerController {
     private final CustomerService customerService;
 
     //gonderilen response un icinde response<T> ve hemin T nin listi client e gonderilecek
-    @GetMapping("/GetCustomerList")
-    public Response<List<RespCustomer>> getCustomerList() {
-        return customerService.getCustomerList();
+    @PostMapping("/GetCustomerList")
+    public Response<List<RespCustomer>> getCustomerList(@RequestBody ReqToken reqToken) {
+        return customerService.getCustomerList(reqToken);
     }
 
     @GetMapping("/GetCustomerById/{custId}")
