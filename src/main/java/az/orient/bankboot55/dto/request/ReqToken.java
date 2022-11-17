@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ReqToken {
 
-    private Long id;
+    private Long userId;
     private String token;
 
 }

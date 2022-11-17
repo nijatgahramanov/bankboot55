@@ -16,7 +16,7 @@ public class Utility {
     private final UserRepository userRepository;
 
     public User checkToken(ReqToken reqToken) {
-        Long userId = reqToken.getId();
+        Long userId = reqToken.getUserId();
         String token = reqToken.getToken();
 
         if (userId == null || token == null) {
